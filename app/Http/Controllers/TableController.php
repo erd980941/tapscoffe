@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Services\TableService;
+use App\Http\Resources\TableResource;
 
 class TableController extends Controller
 {
@@ -17,13 +18,13 @@ class TableController extends Controller
     public function index()
     {
         $tables = $this->tableService->getAllTables();
-        return response()->json($tables);
+        return TableResource::collection($tables);
     }
 
     public function show($id)
     {
         $table = $this->tableService->findTableById($id);
-        return response()->json($table);
+        return new TableResource($table);
     }
 
     public function store(Request $request)
