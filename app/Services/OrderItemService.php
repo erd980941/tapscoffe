@@ -13,5 +13,28 @@ class OrderItemService
         $this->orderItemRepository = $orderItemRepository;
     }
 
+    public function getAllOrderItems()
+    {
+        return $this->orderItemRepository->getAllOrderItems();
+    }
 
+    public function findOrderItemById($id)
+    {
+        return $this->orderItemRepository->findOrderItemById($id);
+    }
+
+    public function createOrderItem(array $data)
+    {
+        return $this->orderItemRepository->createOrderItem($data);
+    }
+
+    public function updateOrderItem($id, array $data)
+    {
+        return $this->orderItemRepository->updateOrderItem($id, $data);
+    }
+
+    public function deleteOrderItem($id)
+    {
+        return $this->orderItemRepository->deleteOrderItem($id);
+    }
 }
