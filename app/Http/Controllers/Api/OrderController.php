@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
-use App\Services\OrderService;
-
+namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
+
+use App\Services\OrderService;
+use App\Http\Controllers\Controller;
 
 class OrderController extends Controller
 {

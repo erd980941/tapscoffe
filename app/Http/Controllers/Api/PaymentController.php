@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use Illuminate\Http\Request;
 use App\Services\PaymentService;
+use App\Http\Controllers\Controller;
 
 class PaymentController extends Controller
 {
