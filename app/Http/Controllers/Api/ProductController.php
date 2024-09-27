@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use Illuminate\Http\Request;
 use App\Services\ProductService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -18,30 +19,30 @@ class ProductController extends Controller
     public function index()
     {
         $products = $this->productService->getAllProducts();
-        return response()->json($products);
+        return ProductResource::collection($products);
     }
 
     public function show($id)
     {
         $product = $this->productService->findProductById($id);
-        return response()->json($product);
+        return new ProductResource($product);
     }
 
     public function store(Request $request)
     {
         $product = $this->productService->createProduct($request->all());
-        return response()->json($product, 201);
+        return new ProductResource($product);
     }
 
     public function update(Request $request, $id)
     {
         $product = $this->productService->updateProduct($id, $request->all());
-        return response()->json($product);
+        return new ProductResource($product);
     }
 
     public function destroy($id)
     {
         $this->productService->deleteProduct($id);
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Product deleted successfully'], 204);
     }
 }

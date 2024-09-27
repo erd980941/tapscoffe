@@ -31,18 +31,18 @@ class TableController extends Controller
     public function store(Request $request)
     {
         $table = $this->tableService->createTable($request->all());
-        return response()->json($table, 201);
+        return new TableResource($table);
     }
 
     public function update(Request $request, $id)
     {
         $table = $this->tableService->updateTable($id, $request->all());
-        return response()->json($table);
+        return new TableResource($table);
     }
 
     public function destroy($id)
     {
         $this->tableService->deleteTable($id);
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Table deleted successfully'], 204);
     }
 }
