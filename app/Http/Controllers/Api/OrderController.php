@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 
 use App\Services\OrderService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -18,30 +19,30 @@ class OrderController extends Controller
     public function index()
     {
         $orders = $this->orderService->getAllOrders();
-        return response()->json($orders);
+        return OrderResource::collection($orders);
     }
 
     public function show($id)
     {
         $order = $this->orderService->findOrderById($id);
-        return response()->json($order);
+        return new OrderResource($order);
     }
 
     public function store(Request $request)
     {
         $order = $this->orderService->createOrder($request->all());
-        return response()->json($order, 201);
+        return new OrderResource($order);
     }
 
     public function update(Request $request, $id)
     {
         $order = $this->orderService->updateOrder($id, $request->all());
-        return response()->json($order);
+        return new OrderResource($order);
     }
 
     public function destroy($id)
     {
         $this->orderService->deleteOrder($id);
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Order deleted successfully'], 204);
     }
 }
