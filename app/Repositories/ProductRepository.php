@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Product;
@@ -23,17 +24,64 @@ class ProductRepository
 
     public function createProduct(array $data)
     {
-        return $this->model->create($data);
+        try {
+            $product = $this->model->create($data);
+            return [
+                'success' => true,
+                'message' => 'Product added successfully',
+                'data' => $product
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'An error occurred while add the product',
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     public function updateProduct($id, array $data)
     {
-        $order = $this->findProductById($id);
-        return $order->update($data);
+        try {
+            $product = $this->findProductById($id);
+            if (!$product) {
+                return [
+                    'success' => false,
+                    'message' => 'Ürün bulunamadı.'
+                ];
+            }
+            $product->update($data);
+
+            return [
+                'success' => true,
+                'message' => 'Product updated successfully',
+                'data' => $product
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'An error occurred while updating the product',
+                'error' => $e->getMessage()
+            ];
+        }
     }
 
     public function deleteProduct($id)
     {
-        return $this->findProductById($id)->delete();
+        try {
+            $product = $this->findProductById($id)->delete();
+            $product->delete();
+
+            return [
+                'success' => true,
+                'message' => 'Product deleted successfully'
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'An error occurred while deleting the product',
+                'error' => $e->getMessage()
+            ];
+        }
     }
 }
