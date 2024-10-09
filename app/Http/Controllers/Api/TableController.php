@@ -42,7 +42,7 @@ class TableController extends Controller
 
     public function destroy($id)
     {
-        $this->tableService->deleteTable($id);
-        return response()->json(['message' => 'Table deleted successfully'], 204);
+        $response = $this->tableService->deleteTable($id);
+        return response()->json($response);
     }
 }
