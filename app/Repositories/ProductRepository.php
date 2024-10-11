@@ -69,7 +69,7 @@ class ProductRepository
     public function deleteProduct($id)
     {
         try {
-            $product = $this->findProductById($id)->delete();
+            $product = $this->findProductById($id);
             $product->delete();
 
             return [
