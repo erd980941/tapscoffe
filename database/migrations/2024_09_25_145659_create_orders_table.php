@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('table_id')->constrained()->onDelete('restrict');
             $table->foreignId('user_id')->constrained()->onDelete('restrict');
+            $table->enum('status', ['paid', 'open'])->default('open'); 
+            $table->decimal('total', 8, 2)->nullable(); 
             $table->timestamp('order_date')->useCurrent();
             $table->timestamps();
         });
