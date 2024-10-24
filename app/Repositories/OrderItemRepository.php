@@ -34,6 +34,18 @@ class OrderItemRepository
 
     public function deleteOrderItem($id)
     {
-        return $this->findOrderItemById($id)->delete();
+        $result = $this->findOrderItemById($id)->delete();
+        if($result){
+            return [
+                'success' => true,
+                'message' => 'Sipariş Başarıyla Silindi.'
+            ];
+        }
+        else{
+            return [
+                'success' => true,
+                'message' => 'Sipariş Silinemedi.'
+            ];
+        }
     }
 }

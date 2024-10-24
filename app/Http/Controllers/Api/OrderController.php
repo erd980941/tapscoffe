@@ -42,7 +42,7 @@ class OrderController extends Controller
 
     public function destroy($id)
     {
-        $this->orderService->deleteOrder($id);
-        return response()->json(['message' => 'Order deleted successfully'], 204);
+        $response = $this->orderService->deleteOrder($id);
+        return response()->json($response);
     }
 }

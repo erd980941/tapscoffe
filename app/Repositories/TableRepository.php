@@ -14,12 +14,12 @@ class TableRepository
     }
     public function getAllTables()
     {
-        return $this->model->all();
+        return $this->model->with(['activeOrder.orderItems.product'])->get();
     }
 
     public function findTableById($id)
     {
-        return $this->model->find($id);
+        return $this->model->with(['activeOrder.orderItems.product'])->findOrFail($id);
     }
 
     public function createTable(array $data)
@@ -55,6 +55,35 @@ class TableRepository
             }
 
             $table->update($data);
+
+            return [
+                'success' => true,
+                'message' => 'Table updated successfully',
+                'data' => $table  
+            ];
+        } catch (\Exception $e) {
+            return [
+                'success' => false,
+                'message' => 'An error occurred while updating the table',
+                'error' => $e->getMessage()
+            ];
+        }
+    }
+
+    public function updateStatus($id, string $status)
+    {
+        try {
+            $table = $this->findTableById($id);
+
+            if (!$table) {
+                return [
+                    'success' => false,
+                    'message' => 'Tablo bulunamadı.'
+                ];
+            }
+
+            $table->status = $status;
+            $table->save();
 
             return [
                 'success' => true,

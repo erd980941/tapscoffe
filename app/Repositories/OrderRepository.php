@@ -19,7 +19,7 @@ class OrderRepository
 
     public function findOrderById($id)
     {
-        return $this->model->find($id);
+        return $this->model->with('orderItems.product')->find($id);
     }
 
     public function createOrder(array $data)
@@ -35,7 +35,20 @@ class OrderRepository
 
     public function deleteOrder($id)
     {
-        return $this->findOrderById($id)->delete();
+        $result = $this->findOrderById($id)->delete();
+        if($result){
+            return [
+                'success' => true,
+                'message' => 'Sipariş Başarıyla Silindi.'
+            ];
+        }
+        else{
+            return [
+                'success' => true,
+                'message' => 'Sipariş Silinemedi.'
+            ];
+        }
+        
     }
     
 }
